@@ -681,7 +681,7 @@ def filter_query(column, values, query_type="match_phrase"):
 
 
 def delete_query(response):
-    return {"query": {"ids": {"type": "transaction_mapping", "values": [i["_id"] for i in response["hits"]["hits"]]}}}
+    return {"query": {"ids": {"values": [i["_id"] for i in response["hits"]["hits"]]}}}
 
 
 def chunks(l, n):
@@ -791,9 +791,7 @@ def delete_awards_from_es(client, id_list, job_id, config, index=None):
         for v in values_generator:
             body = filter_query(column, v)
             response = client.search(index=index, body=json.dumps(body), size=config["max_query_size"])
-            delete_body = {
-                "query": {"ids": {"type": "award_mapping", "values": [i["_id"] for i in response["hits"]["hits"]]}}
-            }
+            delete_body = delete_query(response)
             try:
                 client.delete_by_query(
                     index=index, body=json.dumps(delete_body), refresh=True, size=config["max_query_size"]
