@@ -514,7 +514,7 @@ def test_success_with_all_filters(client, monkeypatch, elasticsearch_award_index
 
 
 @pytest.mark.django_db
-def test_naics_code_query_sting_logic(client, monkeypatch, spending_by_award_test_data, elasticsearch_award_index):
+def test_naics_code_query_string_logic(client, monkeypatch, spending_by_award_test_data, elasticsearch_award_index):
     """
     Verify use of built query_string boolean logic for NAICS code inclusions/exclusions executes as expected on ES
     """
@@ -558,7 +558,7 @@ def test_naics_code_query_sting_logic(client, monkeypatch, spending_by_award_tes
     assert resp.status_code == status.HTTP_200_OK
     assert len(resp.json().get("results")) == 1
     assert resp.json().get("results") == expected_result, "NAICS Code filter does not match expected result"
-    
+
     # TODO: Repeat the above post and asserts for a variety of different NAICS require/exclude combos
 
     assert len(logging_statements) != 0, "Elasticsearch was not used for this test"
