@@ -18,6 +18,7 @@ from usaspending_api.references.models.ref_program_activity import RefProgramAct
 from usaspending_api.references.models.rosetta import Rosetta
 from usaspending_api.references.models.subtier_agency import SubtierAgency
 from usaspending_api.references.models.toptier_agency import ToptierAgency
+from usaspending_api.references.models.submission_window_schedule import SubmissionWindowSchedule
 
 __all__ = [
     "Agency",
@@ -40,4 +41,5 @@ __all__ = [
     "Rosetta",
     "SubtierAgency",
     "ToptierAgency",
+    "SubmissionWindowSchedule",
 ]
