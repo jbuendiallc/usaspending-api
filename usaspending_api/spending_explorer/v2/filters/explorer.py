@@ -94,35 +94,7 @@ class Explorer(object):
 
         return queryset
 
-    def recipient(self):
-        # Recipients Queryset
-        alt_set = (
-            self.alt_set.filter(~Q(transaction_obligated_amount=Decimal("NaN")))
-            .filter(
-                Q(award__latest_transaction__contract_data__awardee_or_recipient_legal__isnull=False)
-                | Q(award__latest_transaction__assistance_data__awardee_or_recipient_legal__isnull=False)
-            )
-            .annotate(
-                id=Coalesce(
-                    "award__latest_transaction__contract_data__awardee_or_recipient_legal",
-                    "award__latest_transaction__assistance_data__awardee_or_recipient_legal",
-                ),
-                type=Value("recipient", output_field=CharField()),
-                name=Coalesce(
-                    "award__latest_transaction__contract_data__awardee_or_recipient_legal",
-                    "award__latest_transaction__assistance_data__awardee_or_recipient_legal",
-                ),
-                code=Coalesce(
-                    "award__latest_transaction__assistance_data__awardee_or_recipient_legal",
-                    "award__latest_transaction__contract_data__awardee_or_recipient_legal",
-                ),
-            )
-            .values("id", "type", "name", "code", "amount")
-            .annotate(total=Sum("transaction_obligated_amount"))
-            .order_by("-total")
-        )
 
-        return alt_set
 
     def agency(self):
         # Funding Top Tier Agencies Querysets
@@ -165,6 +137,46 @@ class Explorer(object):
                 type=Value("award", output_field=CharField()),
             )
             .values("id", "generated_unique_award_id", "type", "piid", "fain", "uri", "amount")
+            .annotate(total=Sum("transaction_obligated_amount"))
+            .order_by("-total")
+        )
+
+        return alt_set
+
+    def defc(self):
+        queryset = (
+            self.queryset
+                .annotate(
+                id=F("disaster_emergency_fund"),
+                code=F("disaster_emergency_fund"),
+                type=F("disaster_emergency_fund"),
+                name=F("disaster_emergency_fund")
+            ).values("id", "amount", "code", "type", "name")
+        )
+
+        return queryset
+
+    def recipient(self):
+        # Recipients Queryset
+        alt_set = (
+            self.alt_set.filter(~Q(transaction_obligated_amount=Decimal("NaN")))
+            .filter(
+                Q(award__latest_transaction__contract_data__awardee_or_recipient_legal__isnull=False)
+                | Q(award__latest_transaction__assistance_data__awardee_or_recipient_legal__isnull=False)
+            )
+            .annotate(
+                id=F("disaster_emergency_fund"),
+                type=Value("recipient", output_field=CharField()),
+                name=Coalesce(
+                    "award__latest_transaction__contract_data__awardee_or_recipient_legal",
+                    "award__latest_transaction__assistance_data__awardee_or_recipient_legal",
+                ),
+                code=Coalesce(
+                    "award__latest_transaction__assistance_data__awardee_or_recipient_legal",
+                    "award__latest_transaction__contract_data__awardee_or_recipient_legal",
+                ),
+            )
+            .values("id", "type", "name", "code", "amount")
             .annotate(total=Sum("transaction_obligated_amount"))
             .order_by("-total")
         )

@@ -193,7 +193,8 @@ def type_filter(_type, filters, limit=None):
         if _type == "object_class":
             queryset = exp.object_class()
         if _type == "agency":
-            queryset = exp.agency()
+            queryset = exp.defc()
+
 
         # Actual total value of filtered results
         actual_total = queryset.aggregate(total=Sum("amount"))["total"]
