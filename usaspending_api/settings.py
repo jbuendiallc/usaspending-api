@@ -287,6 +287,15 @@ REST_FRAMEWORK = {
         "usaspending_api.common.renderers.BrowsableAPIRendererWithoutForms",
     ),
     "EXCEPTION_HANDLER": "usaspending_api.common.custom_exception_handler.custom_exception_handler",
+    "DEFAULT_THROTTLE_CLASSES": ["usaspending_api.common.throttling.throttling.CustomRateThrottle"],
+    "DEFAULT_THROTTLE_RATES": {
+        # This endpoint is slower than most, and we can allow 10 reqs/sec.
+        "spending_by_geography": "10/sec",
+        # This endpoint is faster than most, and we can allow 1000 reqs/sec.
+        "awards_last_updated": "1000/sec",
+        #
+        "custom": "100/min",
+    },
 }
 
 # Internationalization
@@ -357,12 +366,14 @@ LOGGING = {
 
 # If caches added or renamed, edit clear_caches in usaspending_api/etl/helpers.py
 CACHES = {
-    "default": {"BACKEND": "django.core.cache.backends.locmem.LocMemCache", "LOCATION": "default-loc-mem-cache"},
+    # "default": {"BACKEND": "django.core.cache.backends.locmem.LocMemCache", "LOCATION": "default-loc-mem-cache"},
+    "default": {"BACKEND": "redis_cache.RedisCache", "LOCATION": "localhost:6379"},
     "locations": {"BACKEND": "django.core.cache.backends.locmem.LocMemCache", "LOCATION": "locations-loc-mem-cache"},
 }
 
 # Cache environment - 'local', 'disabled', or 'elasticache'
-CACHE_ENVIRONMENT = "disabled"
+# CACHE_ENVIRONMENT = "disabled"
+CACHE_ENVIRONMENT = "local"
 
 # Set up the appropriate elasticache for our environment
 CACHE_ENVIRONMENTS = {
@@ -377,7 +388,8 @@ CACHE_ENVIRONMENTS = {
             "MASTER_CACHE": "ELASTICACHE-MASTER-STRING",
         },
     },
-    "local": {"BACKEND": "django.core.cache.backends.locmem.LocMemCache", "LOCATION": "locations-loc-mem-cache"},
+    # "local": {"BACKEND": "django.core.cache.backends.locmem.LocMemCache", "LOCATION": "locations-loc-mem-cache"},
+    "local": {"BACKEND": "redis_cache.RedisCache", "LOCATION": "localhost:6379"},
     "disabled": {"BACKEND": "django.core.cache.backends.dummy.DummyCache"},
 }
 

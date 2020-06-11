@@ -11,6 +11,7 @@ from django.db.models.functions import Cast
 from elasticsearch_dsl import A, Q as ES_Q
 from rest_framework.request import Request
 from rest_framework.response import Response
+from rest_framework.throttling import ScopedRateThrottle
 from rest_framework.views import APIView
 from typing import Optional, List, Dict
 
@@ -21,6 +22,7 @@ from usaspending_api.common.cache_decorator import cache_response
 from usaspending_api.common.elasticsearch.search_wrappers import TransactionSearch
 from usaspending_api.common.helpers.generic_helper import get_generic_filters_message
 from usaspending_api.common.query_with_filters import QueryWithFilters
+from usaspending_api.common.throttling.throttling import CustomRateThrottle
 from usaspending_api.common.validator.award_filter import AWARD_FILTER
 from usaspending_api.common.validator.pagination import PAGINATION
 from usaspending_api.common.validator.tinyshield import TinyShield
@@ -44,6 +46,9 @@ class SpendingByGeographyVisualizationViewSet(APIView):
     """
     This route takes award filters, and returns spending by state code, county code, or congressional district code.
     """
+
+    throttle_scope = "spending_by_geography"
+    throttle_classes = (ScopedRateThrottle, CustomRateThrottle)
 
     endpoint_doc = "usaspending_api/api_contracts/contracts/v2/search/spending_by_geography.md"
 
