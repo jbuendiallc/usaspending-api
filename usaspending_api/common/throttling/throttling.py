@@ -1,8 +1,6 @@
 from rest_framework import throttling
 from django.core.cache import cache as default_cache
 import time
-
-# import redis
 from rest_framework.settings import api_settings
 
 

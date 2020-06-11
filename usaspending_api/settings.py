@@ -291,11 +291,11 @@ REST_FRAMEWORK = {
     "DEFAULT_THROTTLE_CLASSES": ["usaspending_api.common.throttling.throttling.CustomRateThrottle"],
     "DEFAULT_THROTTLE_RATES": {
         # This endpoint is slower than most, and we can allow 10 reqs/sec.
-        "spending_by_geography": "10/sec",
+        "spending_by_geography": "1/min",
         # This endpoint is faster than most, and we can allow 1000 reqs/sec.
         "awards_last_updated": "1000/sec",
         #
-        "custom": "100/min",
+        "custom": "10/min",
     },
 }
 
@@ -389,8 +389,8 @@ CACHE_ENVIRONMENTS = {
             "MASTER_CACHE": "ELASTICACHE-MASTER-STRING",
         },
     },
-    # "local": {"BACKEND": "django.core.cache.backends.locmem.LocMemCache", "LOCATION": "locations-loc-mem-cache"},
-    "local": {"BACKEND": "redis_cache.RedisCache", "LOCATION": "localhost:6379"},
+    "local": {"BACKEND": "django.core.cache.backends.locmem.LocMemCache", "LOCATION": "locations-loc-mem-cache"},
+    # "local": {"BACKEND": "redis_cache.RedisCache", "LOCATION": "localhost:6379"},
     "disabled": {"BACKEND": "django.core.cache.backends.dummy.DummyCache"},
 }
 

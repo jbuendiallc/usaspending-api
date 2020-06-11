@@ -4,6 +4,7 @@ from django.db.models import Max
 from rest_framework.exceptions import NotFound
 from rest_framework.request import Request
 from rest_framework.response import Response
+from rest_framework.throttling import ScopedRateThrottle
 from rest_framework.views import APIView
 
 from usaspending_api.awards.models import Award, FinancialAccountsByAwards
@@ -20,6 +21,8 @@ logger = logging.getLogger("console")
 
 
 class AwardLastUpdatedViewSet(APIView):
+    throttle_scope = "awards_last_updated"
+    throttle_classes = (ScopedRateThrottle,)
     """
     Return all award spending by award type for a given fiscal year and agency id.
     """

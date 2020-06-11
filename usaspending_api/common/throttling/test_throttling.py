@@ -52,12 +52,16 @@
 #     }
 #
 #
-# # url's to test
-# url_spending_over_time = "http://127.0.0.1:8000/api/v2/search/spending_over_time"
-# url_spending_by_geography = "http://127.0.0.1:8000/api/v2/search/spending_by_geography"
-# # url_recipient_duns = "http://127.0.0.1:8000/api/v2/search/spending_by_category/recipient_duns/"
-# url_last_updated = "http://127.0.0.1:8000/api/v2/awards/last_updated/"
-# # http://127.0.0.1:8000/api/v2/search/spending_by_category/cfda
+# IS_LOCAL = False
+#
+# if IS_LOCAL:
+#     url_spending_over_time = "http://127.0.0.1:8000/api/v2/search/spending_over_time"
+#     url_spending_by_geography = "http://127.0.0.1:8000/api/v2/search/spending_by_geography"
+#     url_last_updated = "http://127.0.0.1:8000/api/v2/awards/last_updated/"
+# else:
+#     url_spending_over_time = "https://sandbox-api.usaspending.gov/api/v2/search/spending_over_time"
+#     url_spending_by_geography = "https://sandbox-api.usaspending.gov/api/v2/search/spending_by_geography"
+#     url_last_updated = "https://sandbox-api.usaspending.gov/api/v2/awards/last_updated/"
 #
 # headers = {"Content-type": "application/json"}
 #
@@ -65,16 +69,18 @@
 #
 # print(f"\nStart: {datetime.now()}\n--------------------------------------------")
 #
-# # print(f"Testing Generic Throttling \n--------------------------------------------\nAssume we want any unique IP to only be able to make 100 calls/second on any endpoint.\nWe set this rate in the settings.py file and do not have to explicitly add it to an endpoing APIView class.\nWe will send 1000 requests synchronously and see if some get throttled.")
-# # input("\nPress Enter to continue...")
+# print(
+#     f"Testing Generic Throttling \n--------------------------------------------\nAssume we want any unique IP to only be able to make 100 calls/second on any endpoint.\nWe set this rate in the settings.py file and do not have to explicitly add it to an endpoing APIView class.\nWe will send 1000 requests synchronously and see if some get throttled."
+# )
+# input("\nPress Enter to continue...")
 #
 #
-# # for i in range(1000):
-# #     data = json.dumps(generate_filter_object_spending_over_time(i))
-# #     # uncomment below line for async requests
-# #     # reqs.append(grequests.post(url, headers=headers, data=data))
-# #     response = requests.post(url_spending_over_time, headers=headers, data=data)
-# #     print(response.json())
+# for i in range(20):
+#     data = json.dumps(generate_filter_object_spending_over_time(i))
+#     # uncomment below line for async requests
+#     # reqs.append(grequests.post(url, headers=headers, data=data))
+#     response = requests.post(url_spending_over_time, headers=headers, data=data)
+#     print(response.json())
 #
 #
 # # uncomment following lines for for async requests
@@ -87,7 +93,8 @@
 # )
 # input("Press Enter to continue...")
 #
-# for i in range(1000):
+# for i in range(10):
+#     # headers = {"X-requested-with": "USASpendingFronte"}
 #     data = json.dumps(generate_filter_object_spending_by_geography(i))
 #     response = requests.post(url_spending_by_geography, headers=headers, data=data)
 #     print(response.json())

@@ -22,7 +22,6 @@ from usaspending_api.common.cache_decorator import cache_response
 from usaspending_api.common.elasticsearch.search_wrappers import TransactionSearch
 from usaspending_api.common.helpers.generic_helper import get_generic_filters_message
 from usaspending_api.common.query_with_filters import QueryWithFilters
-from usaspending_api.common.throttling.throttling import CustomRateThrottle
 from usaspending_api.common.validator.award_filter import AWARD_FILTER
 from usaspending_api.common.validator.pagination import PAGINATION
 from usaspending_api.common.validator.tinyshield import TinyShield
@@ -48,7 +47,7 @@ class SpendingByGeographyVisualizationViewSet(APIView):
     """
 
     throttle_scope = "spending_by_geography"
-    throttle_classes = (ScopedRateThrottle, CustomRateThrottle)
+    throttle_classes = (ScopedRateThrottle,)
 
     endpoint_doc = "usaspending_api/api_contracts/contracts/v2/search/spending_by_geography.md"
 
