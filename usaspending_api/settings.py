@@ -367,8 +367,8 @@ LOGGING = {
 
 # If caches added or renamed, edit clear_caches in usaspending_api/etl/helpers.py
 CACHES = {
-    # "default": {"BACKEND": "django.core.cache.backends.locmem.LocMemCache", "LOCATION": "default-loc-mem-cache"},
-    "default": {"BACKEND": "redis_cache.RedisCache", "LOCATION": "localhost:6379"},
+    "default": {"BACKEND": "django.core.cache.backends.locmem.LocMemCache", "LOCATION": "default-loc-mem-cache"},
+    # "default": {"BACKEND": "redis_cache.RedisCache", "LOCATION": "localhost:6379"},
     "locations": {"BACKEND": "django.core.cache.backends.locmem.LocMemCache", "LOCATION": "locations-loc-mem-cache"},
 }
 

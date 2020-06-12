@@ -46,7 +46,7 @@
 #             ],
 #             "award_type_codes": ["A", "B", "C", "D"],
 #         },
-#         "scope": "place_of_performance",
+#         "scope": "place_of_per    formance",
 #         "geo_layer": "state",
 #         "subawards": False,
 #     }
@@ -70,7 +70,7 @@
 # print(f"\nStart: {datetime.now()}\n--------------------------------------------")
 #
 # print(
-#     f"Testing Generic Throttling \n--------------------------------------------\nAssume we want any unique IP to only be able to make 100 calls/second on any endpoint.\nWe set this rate in the settings.py file and do not have to explicitly add it to an endpoing APIView class.\nWe will send 1000 requests synchronously and see if some get throttled."
+#     f"Testing Generic Throttling \n---------------  -----------------------------\nAssume we want any unique IP to only be able to make 100 calls/second on any endpoint.\nWe set this rate in the settings.py file and do not have to explicitly add it to an endpoing APIView class.\nWe will send 1000 requests synchronously and see if some get throttled."
 # )
 # input("\nPress Enter to continue...")
 #
@@ -80,7 +80,7 @@
 #     # uncomment below line for async requests
 #     # reqs.append(grequests.post(url, headers=headers, data=data))
 #     response = requests.post(url_spending_over_time, headers=headers, data=data)
-#     print(response.json())
+#     print(response)
 #
 #
 # # uncomment following lines for for async requests
@@ -88,27 +88,27 @@
 # # print(grequests.map(reqs, exception_handler=exception_handler))
 #
 #
-# print(
-#     f"\n--------------------------------------------\nTesting Endpoint Specific Throttling (ScopedRateThrottle)\n--------------------------------------------\nAssume calls to /search/spending_by_geography are a resource intensive requests.\nWe set a rule that any unique IP can only make 5 requests/second on the /search/spending_by_geography endpoint.\nWe also have to add the throttle_scope and throttle_classes to the APIView class corresponding to this endpoint.\nIt is important to now list the AnonRateThrottle in the throttle_classes.\nWe will send 100 requests synchronously and see if the endpoint specific rate takes precedence over the Anonymous rate."
-# )
-# input("Press Enter to continue...")
+# # print(
+# #     f"\n--------------------------------------------\nTesting Endpoint Specific Throttling (ScopedRateThrottle)\n--------------------------------------------\nAssume calls to /search/spending_by_geography are a resource intensive requests.\nWe set a rule that any unique IP can only make 5 requests/second on the /search/spending_by_geography endpoint.\nWe also have to add the throttle_scope and throttle_classes to the APIView class corresponding to this endpoint.\nIt is important to now list the AnonRateThrottle in the throttle_classes.\nWe will send 100 requests synchronously and see if the endpoint specific rate takes precedence over the Anonymous rate."
+# # )
+# # input("Press Enter to continue...")
 #
-# for i in range(10):
-#     # headers = {"X-requested-with": "USASpendingFronte"}
-#     data = json.dumps(generate_filter_object_spending_by_geography(i))
-#     response = requests.post(url_spending_by_geography, headers=headers, data=data)
-#     print(response.json())
-#
-#
-# print(
-#     f"\n--------------------------------------------\nTesting Custom Throttling\n--------------------------------------------\n"
-# )
-# input("Press Enter to continue...")
-#
-# for i in range(10):
-#     headers = {"X-requested-with": "USASpendingFrontend"}
-#     response = requests.get(url_last_updated, headers=headers)
-#     print(response.json())
+# # for i in range(10):
+# #     # headers = {"X-requested-with": "USASpendingFronte"}
+# #     data = json.dumps(generate_filter_object_spending_by_geography(i))
+# #     response = requests.post(url_spending_by_geography, headers=headers, data=data)
+# #     print(response.json())
 #
 #
-# print(f"--------------------------------------------\nEnd: {datetime.now()}")
+# # print(
+# #     f"\n--------------------------------------------\nTesting Custom Throttling\n--------------------------------------------\n"
+# # )
+# # input("Press Enter to continue...")
+#
+# # for i in range(10):
+# #     headers = {"X-requested-with": "USASpendingFrontend"}
+# #     response = requests.get(url_last_updated, headers=headers)
+# #     print(response.json())
+#
+#
+# # print(f"--------------------------------------------\nEnd: {datetime.now()}")
