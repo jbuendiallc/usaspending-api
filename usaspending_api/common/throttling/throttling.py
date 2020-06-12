@@ -6,6 +6,7 @@ from rest_framework.settings import api_settings
 
 class CustomRateThrottle(throttling.SimpleRateThrottle):
 
+    #
     cache = default_cache
     timer = time.time
     cache_format = "throttle_%(scope)s_%(ident)s"
