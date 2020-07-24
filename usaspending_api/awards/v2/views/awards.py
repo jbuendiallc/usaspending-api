@@ -43,6 +43,8 @@ class AwardRetrieveViewSet(APIView):
 
     endpoint_doc = "usaspending_api/api_contracts/contracts/v2/awards/award_id.md"
 
+    throttle_scope = 'awards_award_id'
+
     def _parse_and_validate_request(self, provided_award_id: str) -> dict:
         request_dict = {"generated_unique_award_id": provided_award_id}
         models = [

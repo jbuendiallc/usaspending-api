@@ -46,6 +46,8 @@ class SpendingByCategoryVisualizationViewSet(APIView):
 
     endpoint_doc = "usaspending_api/api_contracts/contracts/v2/search/spending_by_category.md"
 
+    throttle_scope = 'spending_by_category'
+
     @cache_response()
     def post(self, request: Request) -> Response:
         """Return all budget function/subfunction titles matching the provided search text"""

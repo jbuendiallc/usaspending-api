@@ -55,6 +55,8 @@ class SpendingOverTimeVisualizationViewSet(APIView):
 
     endpoint_doc = "usaspending_api/api_contracts/contracts/v2/search/spending_over_time.md"
 
+    throttle_scope = 'spending_over_time'
+
     @staticmethod
     def validate_request_data(json_data: dict) -> dict:
         models = [

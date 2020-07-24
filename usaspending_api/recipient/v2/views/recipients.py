@@ -312,6 +312,8 @@ class RecipientOverView(APIView):
     This endpoint returns a high-level overview of a specific recipient, given its id.
     """
 
+    throttle_scope = 'recipient_duns'
+
     endpoint_doc = "usaspending_api/api_contracts/contracts/v2/recipient/duns/recipient_id.md"
 
     @cache_response()

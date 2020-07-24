@@ -30,6 +30,8 @@ class NewAwardsOverTimeVisualizationViewSet(APIView):
 
     endpoint_doc = "usaspending_api/api_contracts/contracts/v2/search/new_awards_over_time.md"
 
+    throttle_scope = 'new_awards_over_time'
+
     def validate_api_request(self, json_payload):
         self.groupings = {
             "quarter": "quarter",

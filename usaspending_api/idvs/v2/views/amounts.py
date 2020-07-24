@@ -114,6 +114,8 @@ class IDVAmountsViewSet(APIView):
 
     endpoint_doc = "usaspending_api/api_contracts/contracts/v2/idvs/amounts/award_id.md"
 
+    throttle_scope = "idvs_amount"
+
     @staticmethod
     def _parse_and_validate_request(requested_award: str) -> dict:
         return TinyShield([get_internal_or_generated_award_id_model()]).block({"award_id": requested_award})
