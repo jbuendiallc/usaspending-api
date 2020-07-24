@@ -294,13 +294,13 @@ REST_FRAMEWORK = {
     "EXCEPTION_HANDLER": "usaspending_api.common.custom_exception_handler.custom_exception_handler",
     "DEFAULT_THROTTLE_CLASSES": ["usaspending_api.common.throttling.throttling.ScopedRateThrottle"],
     "DEFAULT_THROTTLE_RATES": {
-            "spending_by_category": "100/min",
-            "spending_over_time": "100/min",
-            "new_awards_over_time": "100/min",
-            "spending_by_award": "100/min",
-            "awards_award_id": "100/min",
-            "recipient_duns": "100/min",
-            "idvs_amount": "100/min"
+        "spending_by_category": "100/min",
+        "spending_over_time": "100/min",
+        "new_awards_over_time": "100/min",
+        "spending_by_award": "100/min",
+        "awards_award_id": "100/min",
+        "recipient_duns": "100/min",
+        "idvs_amount": "100/min"
     },
 }
 
