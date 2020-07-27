@@ -294,13 +294,13 @@ REST_FRAMEWORK = {
     "EXCEPTION_HANDLER": "usaspending_api.common.custom_exception_handler.custom_exception_handler",
     "DEFAULT_THROTTLE_CLASSES": ["rest_framework.throttling.ScopedRateThrottle"],
     "DEFAULT_THROTTLE_RATES": {
-        "spending_by_category": "100/min",
-        "spending_over_time": "100/min",
-        "new_awards_over_time": "100/min",
-        "spending_by_award": "100/min",
-        "awards_award_id": "100/min",
-        "recipient_duns": "100/min",
-        "idvs_amount": "100/min"
+        "spending_by_category": "10/min",
+        "spending_over_time": "10/min",
+        "new_awards_over_time": "10/min",
+        "spending_by_award": "10/min",
+        "awards_award_id": "10/min",
+        "recipient_duns": "10/min",
+        "idvs_amount": "10/min"
     },
 }
 
@@ -382,8 +382,8 @@ CACHES = {
     "locations": {"BACKEND": "django.core.cache.backends.locmem.LocMemCache", "LOCATION": "locations-loc-mem-cache"},
 }
 
-# Cache environment - 'local', 'disabled', or 'elasticache'
-CACHE_ENVIRONMENT = "disabled"
+# Cache environment - 'local', 'disabled', 'elasticache', or 'multiprocessing'
+CACHE_ENVIRONMENT = "multiprocessing"
 
 # Set up the appropriate elasticache for our environment
 CACHE_ENVIRONMENTS = {
@@ -399,6 +399,7 @@ CACHE_ENVIRONMENTS = {
         },
     },
     "local": {"BACKEND": "django.core.cache.backends.locmem.LocMemCache", "LOCATION": "locations-loc-mem-cache"},
+    "multiprocessing": {"BACKEND": "django.core.cache.backends.memcached.MemcachedCache"},
     "disabled": {"BACKEND": "django.core.cache.backends.dummy.DummyCache"},
 }
 
