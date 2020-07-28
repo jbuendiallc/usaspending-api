@@ -361,7 +361,7 @@ def create_componentized_files(sql_json):
         if GLOBAL_ARGS.no_data:
             sql_strings = make_matview_refresh(matview_temp_name, "")
         else:
-            sql_strings = make_matview_refresh(matview_name)
+            sql_strings = make_matview_refresh(matview_name, "")
         write_sql_file(sql_strings, filename_base + "__refresh")
 
 
