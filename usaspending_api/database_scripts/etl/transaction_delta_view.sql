@@ -130,7 +130,7 @@ SELECT
   END AS funding_subtier_agency_agg_key,
 
   UTM.cfda_number,
-  UTM.cfda_title
+  UTM.cfda_title,
   CASE
     WHEN UTM.cfda_number IS NOT NULL
       THEN CONCAT(
